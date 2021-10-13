@@ -1,0 +1,1 @@
+enum Flavours { development , staging , production  }
