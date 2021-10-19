@@ -21,9 +21,9 @@ class MyHomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
-        child: const Icon(Icons.add),
-        backgroundColor: NotesColor.noteColor[500],
+        onPressed: () => Navigator.pushNamed(context, '/addNote'),
+        child: const Icon(Icons.note_add),
+        backgroundColor: NotesColor.noteColor[100],
       ),
     );
   }
