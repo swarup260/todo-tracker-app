@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notes/utils/notes_color.dart';
 import 'package:notes/widgets/action_widget_btn.dart';
+import 'package:intl/intl.dart';
 
 /* MyStaggeredTile */
 // ignore: must_be_immutable
@@ -14,8 +15,11 @@ class AddNote extends StatefulWidget {
 
 class _AddNoteState extends State<AddNote> {
   final TextEditingController _controller = TextEditingController();
+  final TextEditingController _controllerSubText = TextEditingController();
   FocusNode _node = FocusNode(debugLabel: 'Button');
-
+  FocusNode _nodeSubText = FocusNode(debugLabel: 'Button');
+  DateTime today = DateTime.now();
+  DateFormat newFormat = DateFormat("E,h:m");
   List<String> _actions = [
     'Save',
     'Make a copy',
@@ -40,16 +44,45 @@ class _AddNoteState extends State<AddNote> {
           padding: const EdgeInsets.all(10.0),
           child: Column(
             children: <Widget>[
-              EditableText(
-                  controller: _controller,
-                  focusNode: _node,
-                  maxLines: 2,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                  cursorColor: NotesColor.noteColor[500],
-                  backgroundCursorColor: NotesColor.noteColor),
+              Padding(
+                padding: EdgeInsets.all(10.0),
+                child: EditableText(
+                    controller: _controller,
+                    focusNode: _node,
+                    maxLines: 1,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold),
+                    cursorColor: NotesColor.noteColor[500],
+                    backgroundCursorColor: NotesColor.noteColor),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    '${newFormat.format(today)} | 4065 characters',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontSize: 15.0),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: EditableText(
+                      controller: _controllerSubText,
+                      focusNode: _nodeSubText,
+                      maxLines: null,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w100),
+                      cursorColor: NotesColor.noteColor[500],
+                      backgroundCursorColor: NotesColor.noteColor),
+                ),
+              )
             ],
           ),
         ),
@@ -121,10 +154,13 @@ class _AddNoteState extends State<AddNote> {
                               _actionIcons[index],
                               Padding(
                                 padding: const EdgeInsets.only(left: 20.0),
-                                child: Text(
-                                  _actions[index],
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 15),
+                                child: InkWell(
+                                  onTap: () => {},
+                                  child: Text(
+                                    _actions[index],
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 15),
+                                  ),
                                 ),
                               ),
                             ],
