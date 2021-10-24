@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:notes/utils/notes_color.dart';
-import 'package:notes/widgets/add_note.dart';
+import 'package:notes/routes/add_note.dart';
 // import 'package:notes/widgets/animation.dart';
-import 'package:notes/widgets/my_homepage.dart';
+import 'package:notes/routes/my_homepage.dart';
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notes/flavours.dart';
-import 'package:notes/widgets/my_app.dart';
+import 'package:notes/routes/my_app.dart';
 import 'package:provider/provider.dart';
 
 // flutter build --flavor development -t lib/main_staging.dart
