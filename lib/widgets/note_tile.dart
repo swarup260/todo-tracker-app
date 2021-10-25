@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:notes/models/note_list.dart';
 import 'package:notes/utils/notes_color.dart';
 import 'package:notes/widgets/noteTile/note_content.dart';
 import 'package:notes/widgets/noteTile/note_labels.dart';
@@ -8,12 +8,10 @@ import 'package:notes/widgets/noteTile/note_title.dart';
 class NoteTile extends StatelessWidget {
   const NoteTile({
     Key key,
-    @required this.newFormat,
-    @required this.today,
+    @required this.note
   }) : super(key: key);
 
-  final DateFormat newFormat;
-  final DateTime today;
+  final Datum note;
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +21,9 @@ class NoteTile extends StatelessWidget {
             color: NotesColor.noteColor[600]),
         child: Column(
           children: <Widget>[
-            NoteTitle(),
-            NoteContent(),
-            NoteLabels(newFormat: newFormat, today: today)
+            NoteTitle(note : note),
+            NoteContent(note : note),
+            NoteLabels(note : note)
           ],
         ));
   }

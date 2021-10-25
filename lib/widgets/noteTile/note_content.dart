@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-
+import 'package:notes/models/note_list.dart';
 
 class NoteContent extends StatelessWidget {
-  const NoteContent({
-    Key key,
-  }) : super(key: key);
+  const NoteContent({Key key, @required this.note}) : super(key: key);
 
+  final Datum note;
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
         padding: EdgeInsets.all(10.0),
         child: Text(
-          '''Add them. The assertion here will help remind us of that higher up in the call stack, since this assertion would otherwise fire somewhere in the framework Add them. The assertion here will help remind us of that higher up in the call stack, since this assertion would otherwise fire somewhere in the framework ,Add them. The assertion here will help remind us of that higher up in the call stack, since this assertion would otherwise fire somewhere in the framework''',
+          note.body,
           overflow: TextOverflow.ellipsis,
           maxLines: 5,
           style: TextStyle(color: Colors.white),
@@ -21,4 +20,3 @@ class NoteContent extends StatelessWidget {
     );
   }
 }
-

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:notes/models/note_list.dart';
 
+// ignore: must_be_immutable
 class NoteLabels extends StatelessWidget {
-  const NoteLabels({
-    Key key,
-    @required this.newFormat,
-    @required this.today,
-  }) : super(key: key);
+  NoteLabels({Key key, @required this.note}) : super(key: key);
 
-  final DateFormat newFormat;
-  final DateTime today;
+  DateTime today = DateTime.now();
+  DateFormat newFormat = DateFormat("E,h:m");
+  final Datum note;
 
   @override
   Widget build(BuildContext context) {

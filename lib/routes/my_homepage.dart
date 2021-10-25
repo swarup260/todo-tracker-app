@@ -16,7 +16,7 @@ class MyHomePage extends StatelessWidget {
       ),
       body: Container(
         child: Column(
-          children: <Widget>[NoteSearch(), Noteslist()],
+          children: <Widget>[NoteSearch(), NoteslistWidget()],
         ),
       ),
       floatingActionButton: FloatingActionButton(

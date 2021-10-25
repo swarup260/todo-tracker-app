@@ -1,12 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:notes/models/note_list.dart';
 import 'package:notes/utils/notes_color.dart';
 
 // ignore: must_be_immutable
-class AddNoteTitle extends StatelessWidget {
-  AddNoteTitle({ Key key }) :super(key: key);
+class AddNoteTitle extends StatefulWidget {
+  final Datum note;
+  AddNoteTitle({Key key, this.note}) : super(key: key);
 
-  final TextEditingController _controller = TextEditingController();
+  @override
+  _AddNoteTitleState createState() => _AddNoteTitleState();
+}
+
+class _AddNoteTitleState extends State<AddNoteTitle> {
+  TextEditingController _controller = TextEditingController();
   FocusNode _node = FocusNode(debugLabel: 'Button');
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.text = widget.note.title;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +28,9 @@ class AddNoteTitle extends StatelessWidget {
       child: EditableText(
           controller: _controller,
           focusNode: _node,
-          maxLines: 1,
+          maxLines: 2,
           style: TextStyle(
-              color: Colors.black,
-              fontSize: 25,
-              fontWeight: FontWeight.bold),
+              color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold),
           cursorColor: NotesColor.noteColor[500],
           backgroundCursorColor: NotesColor.noteColor),
     );

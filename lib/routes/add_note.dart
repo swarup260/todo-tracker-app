@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes/models/note_list.dart';
 import 'package:notes/widgets/action_widget_btn.dart';
 import 'package:notes/widgets/addNote/add_note_body.dart';
 import 'package:notes/widgets/addNote/bottom_modal_sheet.dart';
@@ -6,15 +7,14 @@ import 'package:notes/widgets/addNote/bottom_modal_sheet.dart';
 /* MyStaggeredTile */
 // ignore: must_be_immutable
 class AddNote extends StatefulWidget {
-  String title;
-  AddNote({Key key, this.title}) : super(key: key);
+  Datum note;
+  AddNote({Key key, this.note}) : super(key: key);
 
   @override
   _AddNoteState createState() => _AddNoteState();
 }
 
 class _AddNoteState extends State<AddNote> {
-  
   List<String> _actions = [
     'Save',
     'Make a copy',
@@ -34,13 +34,13 @@ class _AddNoteState extends State<AddNote> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(context),
-      body: AddNoteBody(),
+      // body: Hero(tag: widget.note.id , child: AddNoteBody(note: widget.note)),
+      body: AddNoteBody(note: widget.note),
     );
   }
 
   AppBar appBar(BuildContext context) {
     return AppBar(
-      title: Text(widget.title),
       elevation: 0,
       backgroundColor: Colors.white,
       leading: ActionWidgetButton(
@@ -73,7 +73,3 @@ class _AddNoteState extends State<AddNote> {
         });
   }
 }
-
-
-
-

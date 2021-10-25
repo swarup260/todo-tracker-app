@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:notes/models/note_list.dart';
 
 // ignore: must_be_immutable
-class AddNoteSubtitle extends StatelessWidget {
-  AddNoteSubtitle({  Key key }) : super(key: key);
+class AddNoteSubtitle extends StatefulWidget {
+  final Datum note;
+  AddNoteSubtitle({Key key , this.note}) : super(key: key);
 
+  @override
+  _AddNoteSubtitleState createState() => _AddNoteSubtitleState();
+}
+
+class _AddNoteSubtitleState extends State<AddNoteSubtitle> {
   DateTime today = DateTime.now();
   DateFormat newFormat = DateFormat("E,h:m");
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +27,7 @@ class AddNoteSubtitle extends StatelessWidget {
       child: Align(
         alignment: Alignment.topLeft,
         child: Text(
-          '${newFormat.format(today)} | 4065 characters',
+          '${newFormat.format(today)} | ${widget.note.body.length} characters',
           textAlign: TextAlign.left,
           style: TextStyle(fontSize: 15.0),
         ),

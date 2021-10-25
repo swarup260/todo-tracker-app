@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:notes/models/note_list.dart';
 
 class NoteTitle extends StatelessWidget {
-  const NoteTitle({
-    Key key,
-  }) : super(key: key);
+  const NoteTitle({Key key, @required this.note}) : super(key: key);
 
+  final Datum note;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -12,11 +12,10 @@ class NoteTitle extends StatelessWidget {
       child: Align(
         alignment: Alignment.topLeft,
         child: Text(
-          'Title',
+          note.title,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
-              color: Colors.white),
+              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
         ),
       ),
     );

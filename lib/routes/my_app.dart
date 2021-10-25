@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:notes/models/note_list.dart';
 import 'package:notes/utils/notes_color.dart';
 import 'package:notes/routes/add_note.dart';
-// import 'package:notes/widgets/animation.dart';
 import 'package:notes/routes/my_homepage.dart';
 
 class MyApp extends StatelessWidget {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => MyHomePage(title: 'Notes'),
-        '/addNote': (context) => AddNote(title: '')
+        '/addNote': (context) => AddNote(note: Datum.initNote())
       },
       theme: ThemeData(
         primarySwatch: NotesColor.noteColor,
