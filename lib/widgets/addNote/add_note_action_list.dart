@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 class AddNoteActionList extends StatelessWidget {
   const AddNoteActionList({
     Key key,
-    @required List<String> actions,
-    @required List<Icon> actionIcons,
-  }) : _actions = actions, _actionIcons = actionIcons, super(key: key);
+    @required List<Map<String, Icon>> actions,
+  })  : _actions = actions,
+        super(key: key);
 
-  final List<String> _actions;
-  final List<Icon> _actionIcons;
+  final List<Map<String, dynamic>> _actions;
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +20,14 @@ class AddNoteActionList extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                _actionIcons[index],
+                _actions[index]['key'],
                 Padding(
                   padding: const EdgeInsets.only(left: 20.0),
                   child: InkWell(
                     onTap: () => {},
                     child: Text(
-                      _actions[index],
-                      style: TextStyle(
-                          color: Colors.white, fontSize: 15),
+                      _actions[index]['icon'],
+                      style: TextStyle(color: Colors.white, fontSize: 15),
                     ),
                   ),
                 ),

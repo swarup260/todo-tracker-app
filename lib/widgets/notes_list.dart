@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:intl/intl.dart';
 import 'package:notes/flavours.dart';
 import 'package:notes/models/note_list.dart';
 import 'package:notes/routes/add_note.dart';
 import 'package:notes/services/api_services.dart';
+import 'package:notes/services/cache_services.dart';
 import 'package:notes/services/note_services.dart';
 import 'package:notes/widgets/note_tile.dart';
 import 'package:provider/provider.dart';
@@ -16,8 +16,9 @@ class NoteslistWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     NoteServices _noteServices = NoteServices(
-        flavours: Provider.of<Flavours>(context), apiServices: ApiServices());
-
+        flavours: Provider.of<Flavours>(context),
+        apiServices: ApiServices(),
+        cacheServices: CacheServices());
     return FutureBuilder<NoteList>(
       future: _noteServices.fetchNotes(),
       // ignore: missing_return
@@ -33,9 +34,6 @@ class NoteslistWidget extends StatelessWidget {
                     builder: (BuildContext context) => AddNote(
                           note: snapshot.data.data[index],
                         ))),
-                // child: Hero(
-                //     tag: '${snapshot.data.data[index].id}',
-                //     child: NoteTile(note: snapshot.data.data[index])),
                 child: NoteTile(note: snapshot.data.data[index]),
               ),
               staggeredTileBuilder: (int index) {

@@ -5,14 +5,11 @@ import 'package:notes/widgets/addNote/add_note_action_list.dart';
 class BottomModalSheet extends StatelessWidget {
   const BottomModalSheet({
     Key key,
-    @required List<String> actions,
-    @required List<Icon> actionIcons,
-  })  : _actions = actions,
-        _actionIcons = actionIcons,
+    @required List<Map<String, Icon>> actionList,
+  })  : _actionList = actionList,
         super(key: key);
 
-  final List<String> _actions;
-  final List<Icon> _actionIcons;
+  final List<Map<String, Icon>> _actionList;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +23,7 @@ class BottomModalSheet extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child:
-                AddNoteActionList(actions: _actions, actionIcons: _actionIcons),
+                AddNoteActionList(actions: _actionList),
           )
         ],
       ),
