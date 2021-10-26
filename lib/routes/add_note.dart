@@ -15,19 +15,15 @@ class AddNote extends StatefulWidget {
 }
 
 class _AddNoteState extends State<AddNote> {
-  List<String> _actions = [
-    'Save',
-    'Make a copy',
-    'Share',
-    'Labels',
-    'Delete note',
-  ];
-  List<Icon> _actionIcons = [
-    Icon(Icons.save, color: Colors.white),
-    Icon(Icons.copy_outlined, color: Colors.white),
-    Icon(Icons.share, color: Colors.white),
-    Icon(Icons.label, color: Colors.white),
-    Icon(Icons.delete, color: Colors.white),
+  final List<Map<String, dynamic>> _actionList = [
+    {'key': 'Save', 'icon': Icon(Icons.save, color: Colors.white)},
+    {
+      'key': 'Make a copy',
+      'icon': Icon(Icons.copy_outlined, color: Colors.white)
+    },
+    {'key': 'Share', 'icon': Icon(Icons.share, color: Colors.white)},
+    {'key': 'Labels', 'icon': Icon(Icons.label, color: Colors.white)},
+    {'key': 'Delete note', 'icon': Icon(Icons.delete, color: Colors.white)},
   ];
 
   @override
@@ -69,7 +65,7 @@ class _AddNoteState extends State<AddNote> {
         context: context,
         backgroundColor: Colors.transparent,
         builder: (BuildContext context) {
-          return BottomModalSheet(actions: _actions, actionIcons: _actionIcons);
+          return BottomModalSheet(actionList: _actionList);
         });
   }
 }
