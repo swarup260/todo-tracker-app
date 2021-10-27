@@ -7,7 +7,7 @@ import 'package:notes/widgets/addNote/bottom_modal_sheet.dart';
 /* MyStaggeredTile */
 // ignore: must_be_immutable
 class AddNote extends StatefulWidget {
-  Datum note;
+  Note note;
   AddNote({Key key, this.note}) : super(key: key);
 
   @override

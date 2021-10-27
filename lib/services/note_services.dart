@@ -37,22 +37,24 @@ class NoteServices {
 
     Uri uri = Uri.https(_config['baseUrl'], endpoints[Endpoint.posts]);
     String result = await _apiServices.ajaxGet(uri);
-    _cacheResult(result, RequestType.saveNoteList);
     NoteList noteList = noteListFromJson(result);
+    await _cacheServices.saveNote(noteList);
     return noteList;
   }
 
   Future<NoteList> writeNote(Map data) async {
     Uri uri = Uri.https(_config['baseUrl'], endpoints[Endpoint.posts]);
     String result = await _apiServices.ajaxPatch(uri, data);
-    _cacheResult(result, RequestType.updateNoteList);
+    NoteList noteList = noteFromJson(result);
+    _cacheResult(noteList.note, RequestType.updateNoteList);
     return _cacheServices.fetchPosts();
   }
 
   Future<NoteList> updateNote(Map data) async {
     Uri uri = Uri.https(_config['baseUrl'], endpoints[Endpoint.posts]);
     String result = await _apiServices.ajaxPost(uri, data);
-    _cacheResult(result, RequestType.updateNoteList);
+    NoteList noteList = noteFromJson(result);
+    _cacheResult(noteList.note, RequestType.updateNoteList);
     return _cacheServices.fetchPosts();
   }
 
@@ -62,11 +64,12 @@ class NoteServices {
       "${endpoints[Endpoint.posts]}/${id as String}",
     );
     String result = await _apiServices.ajaxDelete(uri);
-    _cacheResult(result, RequestType.deleteNoteList);
+    NoteList noteList = noteFromJson(result);
+    _cacheResult(noteList.note, RequestType.deleteNoteList);
     return _cacheServices.fetchPosts();
   }
 
-  Future<void> _cacheResult(String result, RequestType requestType) async {
+  Future<void> _cacheResult(Note result, RequestType requestType) async {
     switch (requestType) {
       case RequestType.addNoteList:
         return await _cacheServices.addNote(result);
@@ -76,9 +79,6 @@ class NoteServices {
         break;
       case RequestType.deleteNoteList:
         return await _cacheServices.deleteNote(result);
-        break;
-      case RequestType.saveNoteList:
-        return await _cacheServices.saveNote(result);
         break;
       default:
         throw Exception('requestType undefined');

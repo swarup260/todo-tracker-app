@@ -4,8 +4,8 @@ import 'package:notes/models/note_list.dart';
 
 // ignore: must_be_immutable
 class AddNoteSubtitle extends StatefulWidget {
-  final Datum note;
-  AddNoteSubtitle({Key key , this.note}) : super(key: key);
+  final Note note;
+  AddNoteSubtitle({Key key, this.note}) : super(key: key);
 
   @override
   _AddNoteSubtitleState createState() => _AddNoteSubtitleState();

@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => MyHomePage(title: 'Notes'),
-        '/addNote': (context) => AddNote(note: Datum.initNote())
+        '/addNote': (context) => AddNote(note: Note.initNote())
       },
       theme: ThemeData(
         primarySwatch: NotesColor.noteColor,

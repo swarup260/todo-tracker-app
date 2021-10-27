@@ -6,12 +6,9 @@ import 'package:notes/widgets/noteTile/note_labels.dart';
 import 'package:notes/widgets/noteTile/note_title.dart';
 
 class NoteTile extends StatelessWidget {
-  const NoteTile({
-    Key key,
-    @required this.note
-  }) : super(key: key);
+  const NoteTile({Key key, @required this.note}) : super(key: key);
 
-  final Datum note;
+  final Note note;
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +18,10 @@ class NoteTile extends StatelessWidget {
             color: NotesColor.noteColor[600]),
         child: Column(
           children: <Widget>[
-            NoteTitle(note : note),
-            NoteContent(note : note),
-            NoteLabels(note : note)
+            NoteTitle(note: note),
+            NoteContent(note: note),
+            NoteLabels(note: note)
           ],
         ));
   }
 }
-
-
-
-
-

@@ -4,7 +4,7 @@ import 'package:notes/utils/notes_color.dart';
 
 // ignore: must_be_immutable
 class AddNoteContent extends StatefulWidget {
-  Datum note;
+  Note note;
   AddNoteContent({Key key, this.note}) : super(key: key);
 
   @override

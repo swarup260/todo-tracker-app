@@ -4,7 +4,7 @@ import 'package:notes/models/note_list.dart';
 class NoteTitle extends StatelessWidget {
   const NoteTitle({Key key, @required this.note}) : super(key: key);
 
-  final Datum note;
+  final Note note;
   @override
   Widget build(BuildContext context) {
     return Padding(

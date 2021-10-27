@@ -6,9 +6,9 @@ import 'package:notes/widgets/addNote/add_note_title.dart';
 
 // ignore: must_be_immutable
 class AddNoteBody extends StatelessWidget {
-  Datum note;
-  AddNoteBody({ Key key,this.note}) : super(key: key);
-  
+  Note note;
+  AddNoteBody({Key key, this.note}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,8 +25,3 @@ class AddNoteBody extends StatelessWidget {
     );
   }
 }
-
-
-
-
-

@@ -8,7 +8,7 @@ class NoteLabels extends StatelessWidget {
 
   DateTime today = DateTime.now();
   DateFormat newFormat = DateFormat("E,h:m");
-  final Datum note;
+  final Note note;
 
   @override
   Widget build(BuildContext context) {

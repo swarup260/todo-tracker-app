@@ -6,6 +6,8 @@ import 'dart:convert';
 
 NoteList noteListFromJson(String str) => NoteList.fromJson(json.decode(str));
 
+NoteList noteFromJson(String str) => NoteList.singlePost(json.decode(str));
+
 String noteListToJson(NoteList data) => json.encode(data.toJson());
 
 class NoteList {
@@ -13,16 +15,18 @@ class NoteList {
     this.status,
     this.message,
     this.data,
+    this.note,
   });
 
   bool status;
   String message;
-  List<Datum> data;
+  List<Note> data;
+  Note note;
 
   factory NoteList.fromJson(Map<String, dynamic> json) => NoteList(
         status: json["status"],
         message: json["message"],
-        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+        data: List<Note>.from(json["data"].map((x) => Note.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -30,17 +34,29 @@ class NoteList {
         "message": message,
         "data": List<dynamic>.from(data.map((x) => x.toJson())),
       };
+
+  String toString() => json.encode({
+        "status": status,
+        "message": message,
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+      });
+
+  factory NoteList.singlePost(Map<String, dynamic> json) => NoteList(
+        status: json["status"],
+        message: json["message"],
+        note: Note.fromJson(json["data"]),
+      );
 }
 
-class Datum {
-  Datum({
+class Note {
+  Note({
     this.userId,
     this.id,
     this.title,
     this.body,
   });
 
-  Datum.initNote() {
+  Note.initNote() {
     this.userId = 0;
     this.id = 0;
     this.title = '';
@@ -52,7 +68,7 @@ class Datum {
   String title;
   String body;
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory Note.fromJson(Map<String, dynamic> json) => Note(
         userId: json["userId"],
         id: json["id"],
         title: json["title"],
@@ -65,4 +81,11 @@ class Datum {
         "title": title,
         "body": body,
       };
+
+  String toString() => json.encode({
+        "userId": userId,
+        "id": id,
+        "title": title,
+        "body": body,
+      });
 }
