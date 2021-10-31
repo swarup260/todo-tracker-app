@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:notes/models/note_provider.dart';
+import 'package:provider/provider.dart';
 
 class AddNoteActionList extends StatelessWidget {
   const AddNoteActionList({
     Key key,
-    @required List<Map<String, Icon>> actions,
+    @required List<Map<String, dynamic>> actions,
   })  : _actions = actions,
         super(key: key);
 
@@ -11,6 +13,8 @@ class AddNoteActionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    NoteProvider noteProvider =
+        Provider.of<NoteProvider>(context, listen: false);
     return ListView.builder(
         itemCount: _actions.length,
         itemBuilder: (BuildContext context, int index) {
@@ -20,13 +24,13 @@ class AddNoteActionList extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                _actions[index]['key'],
+                _actions[index]['icon'],
                 Padding(
                   padding: const EdgeInsets.only(left: 20.0),
                   child: InkWell(
-                    onTap: () => {},
+                    onTap: () => _actions[index]['callback'](noteProvider.note , context),
                     child: Text(
-                      _actions[index]['icon'],
+                      _actions[index]['key'],
                       style: TextStyle(color: Colors.white, fontSize: 15),
                     ),
                   ),

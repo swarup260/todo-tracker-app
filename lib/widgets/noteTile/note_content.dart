@@ -10,11 +10,14 @@ class NoteContent extends StatelessWidget {
     return Expanded(
       child: Padding(
         padding: EdgeInsets.all(10.0),
-        child: Text(
-          note.body,
-          overflow: TextOverflow.ellipsis,
-          maxLines: 5,
-          style: TextStyle(color: Colors.white),
+        child: Align(
+          alignment: Alignment.topLeft,
+          child: Text(
+            note.body,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 5,
+            style: TextStyle(color: Colors.white),
+          ),
         ),
       ),
     );

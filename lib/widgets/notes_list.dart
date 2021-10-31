@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:notes/flavours.dart';
 import 'package:notes/models/note_list.dart';
+import 'package:notes/models/note_provider.dart';
 import 'package:notes/routes/add_note.dart';
-import 'package:notes/services/api_services.dart';
-import 'package:notes/services/cache_services.dart';
 import 'package:notes/services/note_services.dart';
 import 'package:notes/widgets/note_tile.dart';
 import 'package:provider/provider.dart';
@@ -15,10 +14,9 @@ class NoteslistWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    NoteServices _noteServices = NoteServices(
-        flavours: Provider.of<Flavours>(context),
-        apiServices: ApiServices(),
-        cacheServices: CacheServices());
+    print(Provider.of<Flavours>(context));
+
+    NoteServices _noteServices = NoteServices(Provider.of<Flavours>(context));
     return FutureBuilder<NoteList>(
       future: _noteServices.fetchNotes(),
       // ignore: missing_return
@@ -31,13 +29,25 @@ class NoteslistWidget extends StatelessWidget {
               itemCount: snapshot.data.data.length,
               itemBuilder: (BuildContext context, int index) => InkWell(
                 onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(
-                    builder: (BuildContext context) => AddNote(
-                          note: snapshot.data.data[index],
-                        ))),
+                    builder: (BuildContext context) => ChangeNotifierProvider<NoteProvider>(create: (_) => NoteProvider(snapshot.data.data[index]),child: AddNote()))),
                 child: NoteTile(note: snapshot.data.data[index]),
               ),
               staggeredTileBuilder: (int index) {
-                return new StaggeredTile.count(2, index.isEven ? 2 : 2.5);
+                double height = 1.5;
+
+                Note note = snapshot.data.data[index];
+
+                if (note.body.length > 150) {
+                  height = 1.8;
+                }
+                if (note.body.length > 200) {
+                  height = 2;
+                }
+                if (note.body.length > 300) {
+                  height = 2.2;
+                }
+
+                return new StaggeredTile.count(2, height);
               },
               mainAxisSpacing: 5.0,
               crossAxisSpacing: 5.0,

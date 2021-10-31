@@ -3,10 +3,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 enum sharedPreferencesKey { notes }
 
-class CacheServices {
+class CacheNoteServices {
   Future<NoteList> fetchPosts() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     String _notes = _prefs.getString(sharedPreferencesKey.notes.toString());
+    if (_notes == null) {
+      return NoteList();
+    }
     return noteListFromJson(_notes);
   }
 

@@ -6,7 +6,6 @@ import 'package:notes/models/note_list.dart';
 class NoteLabels extends StatelessWidget {
   NoteLabels({Key key, @required this.note}) : super(key: key);
 
-  DateTime today = DateTime.now();
   DateFormat newFormat = DateFormat("E,h:m");
   final Note note;
 
@@ -21,7 +20,8 @@ class NoteLabels extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(5.0),
               child: Text(
-                "Hello",
+                note.label ?? 'default',
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(color: Colors.white),
               ),
             ),
@@ -32,7 +32,7 @@ class NoteLabels extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(10),
-          child: Text("${newFormat.format(today)}",
+          child: Text("${newFormat.format(note.createdAt)}",
               style: TextStyle(color: Colors.white)),
         ),
       ],

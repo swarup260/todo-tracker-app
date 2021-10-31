@@ -1,36 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:notes/models/note_list.dart';
+import 'package:notes/models/note_provider.dart';
 import 'package:notes/utils/notes_color.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
-class AddNoteContent extends StatefulWidget {
-  Note note;
-  AddNoteContent({Key key, this.note}) : super(key: key);
+class AddNoteContent extends StatelessWidget {
+  AddNoteContent({Key key}) : super(key: key);
 
-  @override
-  _AddNoteContentState createState() => _AddNoteContentState();
-}
-
-class _AddNoteContentState extends State<AddNoteContent> {
   final TextEditingController _controllerContent = TextEditingController();
 
   FocusNode _nodeContent = FocusNode(debugLabel: 'Button');
 
   @override
-  void initState() {
-    super.initState();
-    _controllerContent.text = widget.note.body;
-  }
-
-  @override
   Widget build(BuildContext context) {
+    NoteProvider noteProvider =
+        Provider.of<NoteProvider>(context, listen: false);
+    _controllerContent.text = noteProvider.note.body;
     return Expanded(
       child: Padding(
         padding: EdgeInsets.all(10.0),
         child: EditableText(
             controller: _controllerContent,
             focusNode: _nodeContent,
-            onChanged: (value) => print(value.length),
+            onChanged: (String value) {
+              noteProvider.note.body = value;
+              noteProvider.updatenote(noteProvider.note);
+            },
             maxLines: null,
             style: TextStyle(
                 color: Colors.black, fontSize: 15, fontWeight: FontWeight.w100),

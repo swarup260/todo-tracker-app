@@ -49,43 +49,46 @@ class NoteList {
 }
 
 class Note {
-  Note({
-    this.userId,
-    this.id,
-    this.title,
-    this.body,
-  });
 
-  Note.initNote() {
-    this.userId = 0;
-    this.id = 0;
-    this.title = '';
-    this.body = '';
-  }
+  Note(
+      {this.createdAt,
+      this.modifiedAt,
+      this.id,
+      this.title,
+      this.body,
+      this.label});
 
-  int userId;
-  int id;
+  DateTime createdAt;
+  DateTime modifiedAt;
+  String id;
   String title;
   String body;
+  String label;
 
   factory Note.fromJson(Map<String, dynamic> json) => Note(
-        userId: json["userId"],
-        id: json["id"],
+        createdAt: DateTime.parse(json["createdAt"]),
+        modifiedAt: DateTime.parse(json["modifiedAt"]),
+        id: json["_id"],
         title: json["title"],
         body: json["body"],
+        label: json["label"],
       );
 
-  Map<String, dynamic> toJson() => {
-        "userId": userId,
-        "id": id,
-        "title": title,
-        "body": body,
-      };
+  factory Note.initNote() => Note(
+    createdAt : DateTime.now(),
+    modifiedAt : DateTime.now(),
+    id : ' ',
+    title : ' ',
+    body : ' ',
+    label : ' ',
+  );
 
-  String toString() => json.encode({
-        "userId": userId,
-        "id": id,
+  Map<String, dynamic> toJson() => {
+        "createdAt": createdAt.toIso8601String(),
+        "modifiedAt": modifiedAt.toIso8601String(),
+        "_id": id,
         "title": title,
         "body": body,
-      });
+        "label": label,
+      };
 }

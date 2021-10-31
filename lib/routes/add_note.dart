@@ -1,41 +1,89 @@
 import 'package:flutter/material.dart';
+import 'package:notes/flavours.dart';
 import 'package:notes/models/note_list.dart';
+import 'package:notes/models/note_provider.dart';
+import 'package:notes/services/note_services.dart';
 import 'package:notes/widgets/action_widget_btn.dart';
 import 'package:notes/widgets/addNote/add_note_body.dart';
 import 'package:notes/widgets/addNote/bottom_modal_sheet.dart';
+import 'package:provider/provider.dart';
 
 /* MyStaggeredTile */
 // ignore: must_be_immutable
-class AddNote extends StatefulWidget {
-  Note note;
-  AddNote({Key key, this.note}) : super(key: key);
+class AddNote extends StatelessWidget {
+  AddNote({Key key}) : super(key: key);
 
-  @override
-  _AddNoteState createState() => _AddNoteState();
-}
+  List<Map<String, dynamic>> get _actionList => [
+        {
+          'key': 'Save',
+          'icon': Icon(Icons.save, color: Colors.white),
+          'callback': (Note note, BuildContext context) async {
+            final flavours = Provider.of<Flavours>(context, listen: false);
+            NoteList result;
 
-class _AddNoteState extends State<AddNote> {
-  final List<Map<String, dynamic>> _actionList = [
-    {'key': 'Save', 'icon': Icon(Icons.save, color: Colors.white)},
-    {
-      'key': 'Make a copy',
-      'icon': Icon(Icons.copy_outlined, color: Colors.white)
-    },
-    {'key': 'Share', 'icon': Icon(Icons.share, color: Colors.white)},
-    {'key': 'Labels', 'icon': Icon(Icons.label, color: Colors.white)},
-    {'key': 'Delete note', 'icon': Icon(Icons.delete, color: Colors.white)},
-  ];
+            if (note.id != "") {
+              result = await NoteServices(flavours).updateNote({});
+            }
+
+            if (note.id == "") {
+              result = await NoteServices(flavours).writeNote({});
+            }
+            if (result.status) {
+              Navigator.pushNamed(context, '/');
+            }
+            if (!result.status) {}
+          }
+        },
+        {
+          'key': 'Make a copy',
+          'icon': Icon(Icons.copy_outlined, color: Colors.white),
+          'callback': (Note note, BuildContext context) {
+            print(note.toJson());
+            Navigator.pushNamed(context, '/');
+          }
+        },
+        {
+          'key': 'Share',
+          'icon': Icon(Icons.share, color: Colors.white),
+          'callback': (Note note, BuildContext context) {
+            print(note.toJson());
+            Navigator.pushNamed(context, '/');
+          }
+        },
+        {
+          'key': 'Labels',
+          'icon': Icon(Icons.label, color: Colors.white),
+          'callback': (Note note, BuildContext context) {
+            print(note.toJson());
+          }
+        },
+        {
+          'key': 'Delete note',
+          'icon': Icon(Icons.delete, color: Colors.white),
+          'callback': (Note note, BuildContext context) async {
+            final flavours = Provider.of<Flavours>(context, listen: false);
+
+            NoteList result = await NoteServices(flavours).deleteNote(note.id);
+
+            if (result.status) {
+              Navigator.pushNamed(context, '/');
+            }
+            if (!result.status) {}
+          }
+        },
+      ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(context),
-      // body: Hero(tag: widget.note.id , child: AddNoteBody(note: widget.note)),
-      body: AddNoteBody(note: widget.note),
+      body: AddNoteBody(),
     );
   }
 
   AppBar appBar(BuildContext context) {
+    NoteProvider noteProvider =
+        Provider.of<NoteProvider>(context, listen: false);
     return AppBar(
       elevation: 0,
       backgroundColor: Colors.white,
@@ -45,12 +93,12 @@ class _AddNoteState extends State<AddNote> {
       ),
       actions: <Widget>[
         ActionWidgetButton(
-          icon: Icons.redo,
-          callback: () => {},
+          icon: Icons.undo,
+          callback: () => print(noteProvider.note.toJson()),
         ),
         ActionWidgetButton(
-          icon: Icons.undo,
-          callback: () => {},
+          icon: Icons.redo,
+          callback: () => print(noteProvider.note.toJson()),
         ),
         ActionWidgetButton(
           icon: Icons.check,
@@ -61,11 +109,15 @@ class _AddNoteState extends State<AddNote> {
   }
 
   Future<void> bottomModalSheet(BuildContext context) {
+    NoteProvider noteProvider =
+        Provider.of<NoteProvider>(context, listen: false);
     return showModalBottomSheet<void>(
         context: context,
         backgroundColor: Colors.transparent,
         builder: (BuildContext context) {
-          return BottomModalSheet(actionList: _actionList);
+          return ChangeNotifierProvider<NoteProvider>(
+              create: (_) => NoteProvider(noteProvider.note),
+              child: BottomModalSheet(actionList: _actionList));
         });
   }
 }
