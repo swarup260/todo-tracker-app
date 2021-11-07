@@ -77,10 +77,10 @@ class Note {
   factory Note.initNote() => Note(
     createdAt : DateTime.now(),
     modifiedAt : DateTime.now(),
-    id : ' ',
-    title : ' ',
-    body : ' ',
-    label : ' ',
+    id : '',
+    title : '',
+    body : '',
+    label : '',
   );
 
   Map<String, dynamic> toJson() => {
